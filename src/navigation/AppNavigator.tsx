@@ -36,7 +36,7 @@ const AppNavigator = () => {
         <Stack.Screen
           name="UsersList"
           component={UsersListScreen}
-          options={{ title: 'Usuarios' }}
+          options={{ title: 'Gestión de Usuarios' }}
         />
         <Stack.Screen
           name="UserDetail"

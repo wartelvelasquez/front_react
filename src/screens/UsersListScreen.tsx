@@ -155,7 +155,6 @@ const UsersListScreen: React.FC<Props> = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Gestión de Usuarios</Text>
         <View style={styles.headerActions}>
           <TouchableOpacity 
             style={styles.refreshButton} 
@@ -212,15 +211,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f3f4f6',
+    paddingHorizontal: 2
   },
   header: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    justifyContent: 'flex-end',
+    alignItems: 'stretch',
     padding: 16,
     backgroundColor: '#fff',
     borderBottomWidth: 1,
     borderBottomColor: '#e5e7eb',
+    paddingHorizontal: 10
   },
   title: {
     fontSize: 20,
@@ -228,8 +229,8 @@ const styles = StyleSheet.create({
     color: '#111827',
   },
   headerActions: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    alignContent: 'flex-end',
+    flexDirection: 'row'
   },
   refreshButton: {
     width: 40,
@@ -244,14 +245,14 @@ const styles = StyleSheet.create({
   },
   createButton: {
     backgroundColor: '#6366f1',
-    paddingHorizontal: 16,
+    paddingHorizontal: 10,
     paddingVertical: 10,
     borderRadius: 8,
   },
   createButtonText: {
     color: '#fff',
     fontSize: 14,
-    fontWeight: '600',
+    fontWeight: '600'
   },
   content: {
     flex: 1,
