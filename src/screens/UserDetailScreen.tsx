@@ -8,7 +8,7 @@ import {
   Alert,
 } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
+import { RouteProp, useFocusEffect } from '@react-navigation/native';
 import { RootStackParamList } from '../navigation/AppNavigator';
 import { useUsers } from '../contexts/UserContext';
 import Button from '../components/Button';
@@ -29,9 +29,12 @@ const UserDetailScreen: React.FC<Props> = ({ navigation, route }) => {
   const { fetchUserById, deleteUser, loading, error, clearError } = useUsers();
   const [user, setUser] = useState<any>(null);
 
-  useEffect(() => {
-    loadUser();
-  }, [userId]);
+  // Recargar datos cuando la pantalla vuelve al foco
+  useFocusEffect(
+    React.useCallback(() => {
+      loadUser();
+    }, [userId])
+  );
 
   const loadUser = async () => {
     try {
@@ -65,15 +68,11 @@ const UserDetailScreen: React.FC<Props> = ({ navigation, route }) => {
           onPress: async () => {
             try {
               await deleteUser(userId);
+              // Recargar los datos después de eliminar
+              await loadUser();
               Alert.alert(
                 'Éxito', 
-                'Usuario eliminado correctamente',
-                [
-                  {
-                    text: 'OK',
-                    onPress: () => navigation.goBack()
-                  }
-                ]
+                'Usuario eliminado correctamente'
               );
             } catch (err) {
               Alert.alert('Error', 'No se pudo eliminar el usuario');

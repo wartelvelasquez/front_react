@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { useFocusEffect } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { RootStackParamList } from '../navigation/AppNavigator';
 import { useUsers } from '../contexts/UserContext';
@@ -32,9 +33,20 @@ const UsersListScreen: React.FC<Props> = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
   const [itemsPerPage, setItemsPerPage] = useState(5);
 
+  // Cargar datos inicialmente
   useEffect(() => {
     loadUsers();
   }, [itemsPerPage]);
+
+  // Recargar datos cuando la pantalla vuelve al foco (después de crear/editar)
+  useFocusEffect(
+    React.useCallback(() => {
+      // Solo recargar si ya tenemos usuarios (no es la primera carga)
+      if (users.length > 0) {
+        fetchUsers(currentPage, itemsPerPage);
+      }
+    }, [])
+  );
 
   const loadUsers = async () => {
     await fetchUsers(1, itemsPerPage);
